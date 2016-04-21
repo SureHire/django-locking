@@ -187,7 +187,8 @@ class LockableAdminMixin(object):
             msg = _(u'You own this lock. Close out of the item to unlock it')
             css_class = 'locking-edit'
         else:
-            msg = _(u'Locked by %s. Click here to force it to unlock' % locked_by_name)
+            msg = _(u'Locked by %s. This item is read-only until %s exits or their lock expires' %
+                    (locked_by_name, locked_by_name))
             css_class = 'locking-locked'
 
         return (
@@ -199,7 +200,8 @@ class LockableAdminMixin(object):
             'msg': html_utils.escape(msg),
             'locked_obj_id': obj.pk,
             'locked_by_name': html_utils.escape(locked_by_name),
-            'css_class': css_class,}
+            'css_class': css_class,
+        }
 
     get_lock_for_admin.allow_tags = True
     get_lock_for_admin.short_description = 'Lock'
