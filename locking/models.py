@@ -87,7 +87,7 @@ class Lock(models.Model):
 
     unlocked = managers.UnlockedManager()
 
-    content_type = models.ForeignKey(ContentType, on_delete=models.SET_NULL)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
 
     content_object = GenericForeignKey('content_type', 'object_id')
@@ -101,7 +101,7 @@ class Lock(models.Model):
         related_name="working_on_%(app_label)s_%(class)s",
         null=True,
         editable=False,
-        on_delete=models.SET_NULL)
+        on_delete=models.CASCADE)
 
     _hard_lock = models.BooleanField(db_column='hard_lock', default=False,
                                      editable=False)
