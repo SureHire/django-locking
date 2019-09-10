@@ -115,7 +115,7 @@ class LockableAdminMixin(object):
     def render_change_form(self, request, context, add=False, obj=None, **kwargs):
         if not add and getattr(obj, 'pk', None):
             locking_media = self.locking_media(obj)
-            if isinstance(context['media'], basestring):
+            if isinstance(context['media'], str):
                 locking_media = unicode(locking_media)
             context['media'] += locking_media
         return super(LockableAdminMixin, self).render_change_form(
