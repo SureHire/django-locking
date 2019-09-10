@@ -5,10 +5,10 @@ from django.db import models
 
 # Forward compat with Django 1.5's custom user models
 from django.conf import settings
-try:
-    from django.contrib.auth import get_user_model
-except ImportError:
-    from amc_ldap.utils import get_user_model
+# try:
+from django.contrib.auth import get_user_model
+# except ImportError:
+#     from amc_ldap.utils import get_user_model
 
 from django.contrib.contenttypes.models import ContentType
 try:
@@ -87,7 +87,7 @@ class Lock(models.Model):
 
     unlocked = managers.UnlockedManager()
 
-    content_type = models.ForeignKey(ContentType)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
 
     content_object = GenericForeignKey('content_type', 'object_id')
@@ -100,7 +100,8 @@ class Lock(models.Model):
         db_column='locked_by',
         related_name="working_on_%(app_label)s_%(class)s",
         null=True,
-        editable=False)
+        editable=False,
+        on_delete=models.CASCADE)
 
     _hard_lock = models.BooleanField(db_column='hard_lock', default=False,
                                      editable=False)

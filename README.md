@@ -13,9 +13,13 @@ Django has seen great adoption in the content management sphere, especially amon
 Documentation
 -------------
 Forked from the Django Locking plugin at stdbrouw/django-locking, this code features the cream of the crop for django-locking combining features from over 4 repos!
+2019-09-05 Forked from Lift Interactive's fork of stdbrouw/django-locking. 
 
 New features added to this fork
 ===============================
+
+- Support Django 2.2.3 model syntax.
+
 Changes on change list pages
 ----------------------------
     
@@ -195,3 +199,4 @@ https://github.com/stdbrouw/django-locking
 https://github.com/runekaagaard/django-locking
 https://github.com/theatlantic/django-locking
 https://github.com/ortsed/django-locking
+https://github.com/l1f7/django-locking
