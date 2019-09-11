@@ -97,7 +97,7 @@ class Lock(models.Model):
         editable=False)
 
     _locked_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-        db_column='blocked_by',
+        db_column=b'blocked_by',
         related_name="working_on_%(app_label)s_%(class)s",
         null=True,
         editable=False,
