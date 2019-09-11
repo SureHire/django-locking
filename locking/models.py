@@ -92,18 +92,18 @@ class Lock(models.Model):
 
     content_object = GenericForeignKey('content_type', 'object_id')
 
-    _locked_at = models.DateTimeField(db_column=b'locked_at',
+    _locked_at = models.DateTimeField(db_column='locked_at',
         null=True,
         editable=False)
 
     _locked_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-        db_column=b'blocked_by',
+        db_column='blocked_by',
         related_name="working_on_%(app_label)s_%(class)s",
         null=True,
         editable=False,
         on_delete=models.CASCADE)
 
-    _hard_lock = models.BooleanField(db_column=b'hard_lock', default=False,
+    _hard_lock = models.BooleanField(db_column='hard_lock', default=False,
                                      editable=False)
 
     class Meta:
