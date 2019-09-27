@@ -22,6 +22,8 @@ def lock(model_admin, request, object_id, extra_context=None):
     existing_lock_pk = request.GET.get('lock_pk')
     ct = ContentType.objects.get_for_model(model_admin.model)
     try:
+        if 'change' in object_id:
+            object_id = object_id.replace('/change', '')
         lock = Lock.objects.get(content_type=ct, object_id=object_id)
     except Lock.DoesNotExist:
         try:
@@ -50,6 +52,8 @@ def lock(model_admin, request, object_id, extra_context=None):
 
 def _unlock(model_admin, request, object_id, extra_context=None, filter_user=False):
     ct = ContentType.objects.get_for_model(model_admin.model)
+    if 'change' in object_id:
+        object_id = object_id.replace('/change', '')
     filter_kwargs = {}
     if filter_user:
         filter_kwargs['_locked_by'] = request.user
@@ -71,11 +75,15 @@ def _unlock(model_admin, request, object_id, extra_context=None, filter_user=Fal
 
 def lock_remove(model_admin, request, object_id, extra_context=None):
     """Remove any lock on object_id"""
+    if 'change' in object_id:
+        object_id = object_id.replace('/change', '')
     return _unlock(model_admin, request, object_id, extra_context=extra_context)
 
 
 def lock_clear(model_admin, request, object_id, extra_context=None):
     """Clear any locks on object_id locked by the current user"""
+    if 'change' in object_id:
+        object_id = object_id.replace('/change', '')
     return _unlock(model_admin, request, object_id, extra_context=extra_context, filter_user=True)
 
 
@@ -110,6 +118,8 @@ def render_lock_status(request, lock=None, status=200):
 
 def lock_status(model_admin, request, object_id, extra_context=None, **kwargs):
     ct = ContentType.objects.get_for_model(model_admin.model)
+    if 'change' in object_id:
+        object_id = object_id.replace('/change', '')
     try:
         lock = Lock.objects.get(content_type=ct, object_id=object_id)
     except Lock.DoesNotExist:
@@ -124,6 +134,8 @@ def locking_js(model_admin, request, object_id, extra_context=None):
     locking_urls = {
         "lock_remove": reverse("admin:%s_%s_lock_remove" % info, args=[object_id]),
     }
+    if 'change' in object_id:
+        object_id = object_id.replace('/change', '')
 
     if object_id and object_id != '0':
         locking_urls.update({
