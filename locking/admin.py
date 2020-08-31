@@ -11,6 +11,7 @@ from django import forms
 from django.urls import reverse
 from django.utils import html as html_utils
 from django.utils.functional import curry
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
@@ -191,7 +192,7 @@ class LockableAdminMixin(object):
                     (locked_by_name, locked_by_name))
             css_class = 'locking-locked'
 
-        return (
+        return mark_safe((
             u'  <a href="#" title="%(msg)s"'
             u'     data-locked-obj-id="%(locked_obj_id)s"'
             u'     data-locked-by="%(locked_by_name)s"'
@@ -201,7 +202,7 @@ class LockableAdminMixin(object):
             'locked_obj_id': obj.pk,
             'locked_by_name': html_utils.escape(locked_by_name),
             'css_class': css_class,
-        }
+        })
 
     get_lock_for_admin.allow_tags = True
     get_lock_for_admin.short_description = 'Lock'
